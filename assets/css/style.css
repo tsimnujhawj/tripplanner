@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fdfdff;
+    width: 960px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+.header-box {
+    background-color: #546a7b;
+}
+
+.header-box h1 {
+    font-family: "Carme", sans-serif;
+    color: #fff;
+    font-size: 65px;
+    font-weight: bold;
+    border-bottom: 2px solid #62929e;
+    width: 50%;
+    margin: 0px auto;
+}
+
+.input-box {
+    background-color: #393d3f;
+}
+
+.lead {
+    font-family: "Carme", sans-serif;
+    color: #c6c5b9;
+}
+
+
+
+
+
+/* When we have time... */
+/* #myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: 0;
+} */
