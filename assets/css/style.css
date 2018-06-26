@@ -51,6 +51,8 @@ h1 {
     border: 3px solid #546a7b;
     border-radius: 5px;
     margin: 10px auto;
+
+    /* change to "display: visible" when displaying map */
     display: none;
 }
 
