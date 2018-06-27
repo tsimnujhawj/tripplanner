@@ -45,6 +45,113 @@
         </div>
     </div>
 
+    <!-- Box for recommended places -->
+    <div class="row recommend-box">
+        <div class="col-md-12">
+
+            <div class="card bg-dark">
+            <div class="card-heading">
+                <h3 class="card-title"><strong>Recommended Places</strong></h3>
+            </div>
+            <div class="card-body">
+
+            <table class="table table-hover" id='recommend-table'>
+                <thead>
+                    <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Minutes Away</th>
+                    <th>Miles</th>
+                    <th>Rating</th>
+                    <th>Lyft Cost</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                    <td id="rec-name-child">
+                    </td>
+                    <td id="rec-address-child">
+                    </td>
+                    <td id="rec-time-child">
+                    </td>
+                    <td id="rec-miles-child">
+                    </td>
+                    <td id="rec-rating-child">
+                    </td>
+                    <td id="rec-lyft-child">
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table for list of locations added -->
+    <div class="row added-box">
+        <div class="col-md-12">
+
+            <div class="card bg-dark">
+            <div class="card-heading">
+                <h3 class="card-title"><strong>Route</strong></h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover" id='route-table'>
+
+                <thead>
+                    <tr>
+                    <th>Address</th>
+                    <th>Minutes Away</th>
+                    <th>Miles</th>
+                    <th>Lyft Cost</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                    <td id="address-child">
+                    </td>
+                    <td id="time-child">
+                    </td>
+                    <td id="miles-child">
+                    </td>
+                    <td id="lyft-child">
+                    </td>
+                    </tr>
+                </tbody>
+
+                </table>
+
+                <table class="table table-hover" id='total-table'>
+                    <thead>
+                        <tr>
+                        <th>Stops Made</th>
+                        <th>Total Time</th>
+                        <th>Total Miles</th>
+                        <th>Total Lyft Cost</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+                        <tr>
+                        <td id="stops-total">
+                        </td>
+                        <td id="time-total">
+                        </td>
+                        <td id="miles-total">
+                        </td>
+                        <td id="lyft-total">
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Address input box -->
 <div class="row input-box">
     <div class="col-md-12">

@@ -48,14 +48,39 @@ h1 {
 }
 
 .map-box {
+    min-height: 400px;
+    min-width: 400px;
     border: 3px solid #546a7b;
     border-radius: 5px;
     margin: 10px auto;
+    background-image: url("../images/test_map.png");
 
     /* change to "display: visible" when displaying map */
-    display: none;
+    display: visible;
 }
 
+.added-box {
+    margin: 10px auto;
+
+    /* change to "display: visible" when displaying map */
+    display: visible;
+}
+
+.recommend-box {
+    margin: 10px auto;
+
+    /* change to "display: visible" when displaying map */
+    display: visible;
+}
+
+.card {
+    background-color: #546a7b;
+    color: #fdfdff;
+}
+
+.card-heading {
+    color: #fdfdff;
+}
 
 /* When we have time... */
 /* #myVideo {
