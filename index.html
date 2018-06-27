@@ -32,22 +32,22 @@
 
     <!-- Jumbotron header -->
     <div class="jumbotron jumbotron-fluid header-box">
-        <div class="container">
             <h1 class="display-4">Trip Planner</h1>
             <p class="lead">Plan your trip.</p>
-        </div>
     </div>
 
-    <!-- Box for map, includes border -->
+    <!-- Box for MAP, includes border -->
     <div class="row map-box">
-        <div class="col-md-12">
+        <div class="col-md-12 col-s-12" id="map-display">
 
         </div>
     </div>
+
+<!-- TODO: try taking out mins, miles, and or address to, maybe try hover name to appear address -->
 
     <!-- Box for recommended places -->
     <div class="row recommend-box">
-        <div class="col-md-12">
+        <div class="col-md-12 col-s-12">
 
             <div class="card bg-dark">
             <div class="card-heading">
@@ -69,17 +69,29 @@
 
                 <tbody>
                     <tr>
-                    <td id="rec-name-child">
+                        <!-- Recommended place NAME -->
+                    <td id="rec-name">
+                        Name Of Place
                     </td>
-                    <td id="rec-address-child">
+                        <!-- Recommended place ADDRESS -->
+                    <td id="rec-address">
+                        1662 Nevada Ave. E. Saint Paul, MN 55106
                     </td>
-                    <td id="rec-time-child">
+                        <!-- Recommended place TIME OF TRAVEL -->
+                    <td id="rec-time">
+                        18
                     </td>
-                    <td id="rec-miles-child">
+                        <!-- Recommended place MILES -->
+                    <td id="rec-miles">
+                        12
                     </td>
-                    <td id="rec-rating-child">
+                        <!-- Recommended place RATING -->
+                    <td id="rec-rating">
+                        4.6
                     </td>
-                    <td id="rec-lyft-child">
+                        <!-- Recommended place LYFT COST -->
+                    <td id="rec-lyft">
+                        $14.19
                     </td>
                     </tr>
                 </tbody>
@@ -89,9 +101,9 @@
         </div>
     </div>
 
-    <!-- Table for list of locations added -->
+    <!-- Table for list of locations added to route -->
     <div class="row added-box">
-        <div class="col-md-12">
+        <div class="col-md-12 col-s-12">
 
             <div class="card bg-dark">
             <div class="card-heading">
@@ -102,6 +114,7 @@
 
                 <thead>
                     <tr>
+                    <th>Name</th>
                     <th>Address</th>
                     <th>Minutes Away</th>
                     <th>Miles</th>
@@ -111,12 +124,19 @@
 
                 <tbody>
                     <tr>
+                        <!-- ADDRESS -->
+                    <td id="name-child">
+                    </td>
+                        <!-- ADDRESS -->
                     <td id="address-child">
                     </td>
+                        <!-- TIME OF TRAVEL -->
                     <td id="time-child">
                     </td>
+                        <!-- MILES -->
                     <td id="miles-child">
                     </td>
+                        <!-- LYFT COST -->
                     <td id="lyft-child">
                     </td>
                     </tr>
@@ -136,12 +156,16 @@
     
                     <tbody>
                         <tr>
+                            <!-- TOTAL STOPS -->
                         <td id="stops-total">
                         </td>
+                            <!-- TOTAL TIME OF TRAVEL -->
                         <td id="time-total">
                         </td>
+                            <!-- TOTAL MILES TRAVELED -->
                         <td id="miles-total">
                         </td>
+                            <!-- TOTAL COST OF LYFT -->
                         <td id="lyft-total">
                         </td>
                         </tr>
@@ -154,16 +178,21 @@
 
     <!-- Address input box -->
 <div class="row input-box">
-    <div class="col-md-12">
+    <div class="col-md-12 col-s-12">
         <form>
             <div class="form-group row">
               <h1>Enter your starting location:</h1>
+
+                <!-- INPUT FOR ADDRESS -->
               <input class="form-control" id="loc-input" type="text">
             </div>
+                <!-- BUTTON TO SUBMIT ADDRESS, USE ID "add-btn" -->
             <button class="btn btn-primary" id="add-btn" type="submit">Submit</button>
         </form>
     </div>
 </div>
+
+<button class="btn btn-primary" id="reset-btn" type="reset">Reset</button>
 
 
 </div>
@@ -175,3 +204,48 @@
 
 </body>
 </html>
+
+<!-- 
+Use these ID's for appending the RECOMMENDED PLACES:
+Name: rec-name
+Address: rec-address
+Time: rec-time
+Miles: rec-miles
+Rating: rec-rating
+Lyft: rec-lyft
+
+Use these ID's for appending the ROUTE data:
+Name: name-child
+Address: address-child
+Time: time-child
+Miles: miles-child
+Lyft: lyft-child
+
+Use these ID's for appending the TOTAL cost of trip:
+Total of stops made: stops-total
+Total of time traveled: time-total
+Total of miles travled: miles-total
+Total of Lyft cost: lyft-total
+
+Use this BUTTON ID to trigger the MAP FUNCTION:
+Button: add-btn
+
+Use this INPUT ID to gather the value of the input:
+Input: loc-input
+
+Use this ID to display the MAP:
+map-display
+
+Use these CLASSES to make the MAP, ROUTE, and RECOMMENDED PLACE appear
+when the address has been gathered:
+Map: map-box
+Route: added-box
+Recommended: recommend-box
+
+Use this CLASS for the ADD ADDRESS:
+Address box: input-box
+
+Use this ID for the RESET BUTTON:
+Reset button: reset-btn
+
+ -->
