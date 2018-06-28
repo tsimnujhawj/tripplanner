@@ -43,7 +43,6 @@
         </div>
     </div>
 
-<!-- TODO: try taking out mins, miles, and or address to, maybe try hover name to appear address -->
 
     <!-- Box for recommended places -->
     <div class="row recommend-box">
@@ -60,9 +59,13 @@
                     <tr>
                     <th>Name</th>
                     <th>Address</th>
-                    <th>Minutes Away</th>
+
+                    <!-- <th>Minutes Away</th> -->
+
                     <th>Miles</th>
-                    <th>Rating</th>
+
+                    <!-- <th>Rating</th> -->
+
                     <th>Lyft Cost</th>
                     </tr>
                 </thead>
@@ -77,18 +80,20 @@
                     <td id="rec-address">
                         1662 Nevada Ave. E. Saint Paul, MN 55106
                     </td>
-                        <!-- Recommended place TIME OF TRAVEL -->
+
+                        <!-- Recommended place TIME OF TRAVEL
                     <td id="rec-time">
                         18
-                    </td>
+                    </td> -->
+
                         <!-- Recommended place MILES -->
                     <td id="rec-miles">
                         12
                     </td>
-                        <!-- Recommended place RATING -->
+                        <!-- Recommended place RATING
                     <td id="rec-rating">
                         4.6
-                    </td>
+                    </td> -->
                         <!-- Recommended place LYFT COST -->
                     <td id="rec-lyft">
                         $14.19
@@ -116,7 +121,9 @@
                     <tr>
                     <th>Name</th>
                     <th>Address</th>
-                    <th>Minutes Away</th>
+
+                    <!-- <th>Minutes Away</th> -->
+
                     <th>Miles</th>
                     <th>Lyft Cost</th>
                     </tr>
@@ -130,9 +137,11 @@
                         <!-- ADDRESS -->
                     <td id="address-child">
                     </td>
-                        <!-- TIME OF TRAVEL -->
+
+                        <!-- TIME OF TRAVEL
                     <td id="time-child">
-                    </td>
+                    </td> -->
+
                         <!-- MILES -->
                     <td id="miles-child">
                     </td>
@@ -148,7 +157,9 @@
                     <thead>
                         <tr>
                         <th>Stops Made</th>
-                        <th>Total Time</th>
+
+                        <!-- <th>Total Time</th> -->
+
                         <th>Total Miles</th>
                         <th>Total Lyft Cost</th>
                         </tr>
@@ -159,9 +170,11 @@
                             <!-- TOTAL STOPS -->
                         <td id="stops-total">
                         </td>
-                            <!-- TOTAL TIME OF TRAVEL -->
+
+                            <!-- TOTAL TIME OF TRAVEL
                         <td id="time-total">
-                        </td>
+                        </td> -->
+
                             <!-- TOTAL MILES TRAVELED -->
                         <td id="miles-total">
                         </td>
@@ -181,7 +194,7 @@
     <div class="col-md-12 col-s-12">
         <form>
             <div class="form-group row">
-              <h1>Enter your starting location:</h1>
+              <h1 id="add-title">Enter your starting location:</h1>
 
                 <!-- INPUT FOR ADDRESS -->
               <input class="form-control" id="loc-input" type="text">
@@ -247,5 +260,8 @@ Address box: input-box
 
 Use this ID for the RESET BUTTON:
 Reset button: reset-btn
+
+Use this ID for manipulating Enter Address Text:
+Enter Address: add-title
 
  -->

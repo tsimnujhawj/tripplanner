@@ -59,7 +59,7 @@ h1 {
     margin: 10px auto;
 
     /* change to "display: visible" when displaying map */
-    display: visible;
+    display: none;
 }
 
 .added-box {
@@ -67,7 +67,7 @@ h1 {
     margin: 10px auto;
 
     /* change to "display: visible" when displaying map */
-    display: visible;
+    display: none;
 }
 
 .recommend-box {
@@ -75,7 +75,7 @@ h1 {
     margin: 10px auto;
 
     /* change to "display: visible" when displaying map */
-    display: visible;
+    display: none;
 }
 
 .card {
@@ -91,7 +91,6 @@ h1 {
     margin-bottom: 30px;
 }
 
-@media
 
 /* When we have time... */
 /* #myVideo {
