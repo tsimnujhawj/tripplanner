@@ -13,6 +13,7 @@ let app = {
   },
 
   startLocation: {lat: null, lng: null},
+  prevLocation: {lat: null, lng: null},
 
   stopNum: 0,
   // Geocoding -> takes street address and returns lat and lng
@@ -45,46 +46,46 @@ let app = {
       let lat = parseFloat(response.results[0].geometry.location.lat);
       let lng = parseFloat(response.results[0].geometry.location.lng);
 
-      initMap(lat, lng);
+      initMap(lat, lng, address);
       app.startLocation.lat = lat;
       app.startLocation.lng = lng;
       app.recommendPlaces(lat, lng);
     });
   },
 
-  newAddress: function() {
-    let address = $('#new-address-input').val().trim();
+  // newAddress: function() {
+  //   let address = $('#new-address-input').val().trim();
+  //
+  //   // empty address element
+  //   $('#new-address-input').val('');
+  //
+  //   // turn spaces into plusses with regex
+  //   let formattedAddress = this.formatAddress(address);
+  //
+  //   //build queryString
+  //   let queryString = this.googleGeocodingEndpoint + 'address=' + formattedAddress + '&key=AIzaSyAZ-lWaRXK1_nq2EXYxkNiXe2CrkLNee-o';
+  //
+  //   $.ajax({
+  //     url: queryString,
+  //     method: 'GET',
+  //     error: function(_first, _second, _third) {
+  //       console.log("Geocoding failed - It's Google's fault");
+  //     }
+  //   }).then(function(response) {
+  //     console.log('Latitude : ' + response.results[0].geometry.location.lat);
+  //     console.log('Longitude : ' + response.results[0].geometry.location.lng);
+  //     let lat = parseFloat(response.results[0].geometry.location.lat);
+  //     let lng = parseFloat(response.results[0].geometry.location.lng);
+  //
+  //     let latlng = new google.maps.LatLng(lat, lng);
+  //     app.selectStop(latlng);
+  //     app.recommendPlaces(lat, lng);
+  //   });
+  // },
 
-    // empty address element
-    $('#new-address-input').val('');
-
-    // turn spaces into plusses with regex
-    let formattedAddress = this.formatAddress(address);
-
-    //build queryString
-    let queryString = this.googleGeocodingEndpoint + 'address=' + formattedAddress + '&key=AIzaSyAZ-lWaRXK1_nq2EXYxkNiXe2CrkLNee-o';
-
-    $.ajax({
-      url: queryString,
-      method: 'GET',
-      error: function(_first, _second, _third) {
-        console.log("Geocoding failed - It's Google's fault");
-      }
-    }).then(function(response) {
-      console.log('Latitude : ' + response.results[0].geometry.location.lat);
-      console.log('Longitude : ' + response.results[0].geometry.location.lng);
-      let lat = parseFloat(response.results[0].geometry.location.lat);
-      let lng = parseFloat(response.results[0].geometry.location.lng);
-
-      let latlng = new google.maps.LatLng(lat, lng);
-      app.selectStop(latlng);
-      app.recommendPlaces(lat, lng);
-    });
-  },
-
-  selectStop: function(latlng) {
+  selectStop: function(lat, lng, name, address) {
       // When we run this function, we're saying let's add this as a place we want to visit onto the list of stops and let's add a permanent marker to the map
-      console.log(latlng);
+      let latlng = new google.maps.LatLng(lat, lng);
       this.stopNum++;
       var marker = new google.maps.Marker({
         position: latlng,
@@ -93,7 +94,71 @@ let app = {
       });
       selectedMarkers.push(marker);
       bounds.extend(latlng);
-      // this.Lyft();
+
+      if (app.prevLocation.lat !== null) {
+
+        //prevLocation not null, run lyft
+
+        let token = 'oNokEIizBrfoiWyv62O73viR1bYIVJz4GBACpvKvesIkWSktvwFYt9+kub3UIwanCec8s8jXLRl+Obs1GOvh0eJMv+QWeIM8ODwtOxuZMChA/ybWL3lI0Y8=';
+        let endLat = lat;
+        let endLng = lng;
+        let startLat = app.prevLocation.lat;
+        let startLng = app.prevLocation.lng;
+        let queryURL = 'https://api.lyft.com/v1/cost?&start_lat=' + startLat + '&start_lng=' + startLng + '&end_lat=' + endLat + '&end_lng=' + endLng;
+
+        $.ajax({
+            url: queryURL,
+            method: "GET",
+            dataType: "json",
+            headers: {
+                Authorzation: token
+            }
+        }).then(function (response) {
+            // we will now sneakily change the prevLocation lat and lng
+            console.log(response);
+            app.prevLocation.lat = endLat;
+            app.prevLocation.lng = endLng;
+
+            // manipulate returned data
+            let costCents = response.cost_estimates[0].estimated_cost_cents_max;
+            let costDollars = costCents / 100;
+            let distance = response.cost_estimates[0].estimated_distance_miles;
+            let array = [costDollars, distance];
+            app.addStop(name, address, array);
+          });
+      }
+      else {
+        let lyft;
+        app.prevLocation.lat = lat;
+        app.prevLocation.lng = lng;
+        this.addStop(name, address, lyft);
+      }
+  },
+
+  addStop: function(name, address, lyftArray) {
+    let cost;
+    let miles;
+    if (!lyftArray) {
+      cost = '0.00';
+      miles = '0.00';
+    }
+    else {
+      cost = lyftArray[0];
+      miles = lyftArray[1];
+    }
+    let tbody = $('#recBody');
+    let trow = $('<tr>');
+    let tdname = $('<td>').text(name);
+    let tdaddress = $('<td>').text(address);
+    let tdmiles = $('<td>').text(miles);
+    let tdcost = $('<td>').text(cost);
+    trow.append(tdname);
+    trow.append(tdaddress);
+    trow.append(tdmiles);
+    trow.append(tdcost);
+    tbody.append(trow);
+
+    // recalculate totals ()
   },
 
   recommendPlaces: function(lat, lng) {
@@ -117,26 +182,29 @@ let app = {
         row.append(name);
         row.append(address);
         row.append(rating);
+        row.attr('data-name', r.results[i].name);
+        row.attr('data-address', r.results[i].vicinity)
         row.attr('data-lat', r.results[i].geometry.location.lat);
         row.attr('data-lng', r.results[i].geometry.location.lng);
 
         row.addClass('rec');
         $('#recommendations').append(row);
         let bound = new google.maps.LatLng(r.results[i].geometry.location.lat, r.results[i].geometry.location.lng);
-        app.addRecommendedMarker(bound, r.results[i].name);
+        app.addRecommendedMarker(r.results[i].geometry.location.lat, r.results[i].geometry.location.lng, r.results[i].name);
       }
       app.centerMap();
     }
     );
   },
 
-  addRecommendedMarker: function(bound, name) {
+  addRecommendedMarker: function(lat, lng, name) {
     var marker = new google.maps.Marker({
-      position: bound,
+      position: {lat: lat, lng: lng},
       map: map,
       title: name
     });
     recommendedMarkers.push(marker);
+    let bound = new google.maps.LatLng(lat, lng);
     bounds.extend(bound);
   },
 
@@ -153,36 +221,43 @@ let app = {
 
   // BEGIN LYFT CODE
 
-  Lyft: function lyft(startLat, startLng, endLat, endLng) {
-    // var startLat = '37.7763';
-    // var startLng = '-122.3918';
-    // var endLat = '37.7972';
-    // var endLng = '-122.4533';
-    var token = 'oNokEIizBrfoiWyv62O73viR1bYIVJz4GBACpvKvesIkWSktvwFYt9+kub3UIwanCec8s8jXLRl+Obs1GOvh0eJMv+QWeIM8ODwtOxuZMChA/ybWL3lI0Y8=';
-    var queryURL = 'https://api.lyft.com/v1/cost?&start_lat=' + startLat + '&start_lng=' + startLng + '&end_lat=' + endLat + '&end_lng=' + endLng;
-
-    $.ajax({
-        url: queryURL,
-        method: "GET",
-        dataType: "json",
-        headers: {
-            Authorzation: token
-        }
-
-    }).then(function (response) {
-        //console.log($("#view"))
-        //document.getElementById(response).innerHTML = obj.estimated_duration_seconds + ", " + obj.estimated_duration_seconds;
-        $("#view").text(JSON.stringify(response));
-                 });
-
-}
+  // Lyft: function lyft(startLat, startLng, endLat, endLng) {
+  //   // var startLat = '37.7763';
+  //   // var startLng = '-122.3918';
+  //   // var endLat = '37.7972';
+  //   // var endLng = '-122.4533';
+  //   var token = 'oNokEIizBrfoiWyv62O73viR1bYIVJz4GBACpvKvesIkWSktvwFYt9+kub3UIwanCec8s8jXLRl+Obs1GOvh0eJMv+QWeIM8ODwtOxuZMChA/ybWL3lI0Y8=';
+  //   var queryURL = 'https://api.lyft.com/v1/cost?&start_lat=' + startLat + '&start_lng=' + startLng + '&end_lat=' + endLat + '&end_lng=' + endLng;
+  //
+  //   $.ajax({
+  //       url: queryURL,
+  //       method: "GET",
+  //       dataType: "json",
+  //       headers: {
+  //           Authorzation: token
+  //       }
+  //
+  //   }).then(function (response) {
+  //       // we will now sneakily change the prevLocation lat and lng
+  //       console.log(response);
+  //       app.prevLocation.lat = endLat;
+  //       app.prevLocation.lng = endLng;
+  //
+  //       // manipulate returned data
+  //       let costCents = response.cost_estimates[1].estimated_cost_cents_max;
+  //       let costDollars = costCents / 100;
+  //       let distance = response.cost_estimates[1].estimated_distance_miles;
+  //       let array = [costDollars, distance];
+  //       return array;
+  //     });
+  //   }
 }
 
 //END APP
 
 //Initialize Google map
 
-function initMap(startLat, startLong) {
+function initMap(startLat, startLong, address) {
         console.log('map initted');
         var myLatLng = new google.maps.LatLng(startLat, startLong);
 
@@ -191,7 +266,7 @@ function initMap(startLat, startLong) {
           center: myLatLng
         });
         bounds = new google.maps.LatLngBounds();
-        app.selectStop(myLatLng);
+        app.selectStop(startLat, startLong, 'Start', address);
 }
 
 //DOM Listeners
@@ -201,16 +276,13 @@ $(document).on('click', '#form-submit', function(event) {
   app.start();
 });
 
-$(document).on('click', '#new-form-submit', function(event) {
-  event.preventDefault();
-  app.newAddress();
-});
-
 $(document).on('click', '.rec', function(event) {
   let lat = $(this).attr('data-lat');
   let lng = $(this).attr('data-lng');
+  let name = $(this).attr('data-name');
+  let address = $(this).attr('data-address');
   let latlng = new google.maps.LatLng(lat, lng);
-  app.selectStop(latlng);
+  app.selectStop(lat, lng, name, address);
   app.recommendPlaces(lat, lng);
 });
 
