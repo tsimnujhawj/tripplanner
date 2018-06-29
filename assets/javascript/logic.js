@@ -20,7 +20,7 @@ let app = {
   googleGeocodingEndpoint: 'https://maps.googleapis.com/maps/api/geocode/json?',
 
   start: function() {
-
+    console.log('start ran');
     let address = $('#loc-input').val().trim();
 
     // empty address element
@@ -183,6 +183,7 @@ let app = {
 //Initialize Google map
 
 function initMap(startLat, startLong) {
+        console.log('map initted');
         var myLatLng = new google.maps.LatLng(startLat, startLong);
 
         map = new google.maps.Map(document.getElementById('map-display'), {
