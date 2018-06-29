@@ -84,7 +84,7 @@ let app = {
 
   selectStop: function(latlng) {
       // When we run this function, we're saying let's add this as a place we want to visit onto the list of stops and let's add a permanent marker to the map
-
+      console.log(latlng);
       this.stopNum++;
       var marker = new google.maps.Marker({
         position: latlng,
@@ -93,6 +93,7 @@ let app = {
       });
       selectedMarkers.push(marker);
       bounds.extend(latlng);
+      // this.Lyft();
   },
 
   recommendPlaces: function(lat, lng) {
@@ -118,6 +119,7 @@ let app = {
         row.append(rating);
         row.attr('data-lat', r.results[i].geometry.location.lat);
         row.attr('data-lng', r.results[i].geometry.location.lng);
+
         row.addClass('rec');
         $('#recommendations').append(row);
         let bound = new google.maps.LatLng(r.results[i].geometry.location.lat, r.results[i].geometry.location.lng);
@@ -147,7 +149,33 @@ let app = {
 
   centerMap: function() {
     map.fitBounds(bounds);
-  }
+  },
+
+  // BEGIN LYFT CODE
+
+  Lyft: function lyft(startLat, startLng, endLat, endLng) {
+    // var startLat = '37.7763';
+    // var startLng = '-122.3918';
+    // var endLat = '37.7972';
+    // var endLng = '-122.4533';
+    var token = 'oNokEIizBrfoiWyv62O73viR1bYIVJz4GBACpvKvesIkWSktvwFYt9+kub3UIwanCec8s8jXLRl+Obs1GOvh0eJMv+QWeIM8ODwtOxuZMChA/ybWL3lI0Y8=';
+    var queryURL = 'https://api.lyft.com/v1/cost?&start_lat=' + startLat + '&start_lng=' + startLng + '&end_lat=' + endLat + '&end_lng=' + endLng;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+        dataType: "json",
+        headers: {
+            Authorzation: token
+        }
+
+    }).then(function (response) {
+        //console.log($("#view"))
+        //document.getElementById(response).innerHTML = obj.estimated_duration_seconds + ", " + obj.estimated_duration_seconds;
+        $("#view").text(JSON.stringify(response));
+                 });
+
+}
 }
 
 //END APP
