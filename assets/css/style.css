@@ -1,5 +1,5 @@
 * {
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
 
 body {
@@ -48,7 +48,7 @@ h1 {
 }
 
 #map-display {
-    background-image: url("../images/test_map.png");
+    /* background-image: url("../images/test_map.png"); */
 }
 
 .map-box {
