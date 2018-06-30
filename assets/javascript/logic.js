@@ -53,7 +53,7 @@ let app = {
       app.startLocation.lat = lat;
       app.startLocation.lng = lng;
       app.recommendPlaces(lat, lng);
-      // getCurrentWeather(lat + ',' + lng);
+      app.getCurrentWeather(lat, lng);
     });
   },
 
@@ -175,7 +175,7 @@ let app = {
         let bound = new google.maps.LatLng(r.results[i].geometry.location.lat, r.results[i].geometry.location.lng);
         app.addRecommendedMarker(r.results[i].geometry.location.lat, r.results[i].geometry.location.lng, r.results[i].name);
       }
-      app.centerMap();
+      // app.centerMap();
     }
     );
   },
@@ -199,8 +199,21 @@ let app = {
     recommendedMarkers = [];
   },
 
-  centerMap: function() {
-    // map.fitBounds(bounds);
+  getCurrentWeather: function(lat, lng) {
+    let client_id = 'NsPuRu3InFgIvvtiBFlOY';
+    let client_secret = 'z2ZzlPeWZ3UeARqpU89f1mFpbr0qUoWbW5PbzTcI';
+    let url = 'https://api.aerisapi.com/observations/summary/closest?client_id=' + client_id + '&client_secret=' + client_secret + '&p=' + lat + ',' + lng;
+    console.log(url);
+    $.ajax({
+      url: url,
+      method: 'GET'
+    }). then(function(response) {
+      console.log(response.response[0].periods[0].summary.weather.phrase);
+      $('#weather').css('display', 'block');
+      $('#weatherphrase').text(response.response[0].periods[0].summary.weather.phrase);
+      $('#htemperature').text(response.response[0].periods[0].summary.temp.maxF);
+      $('#ltemperature').text(response.response[0].periods[0].summary.temp.minF);
+    })
   }
 }
 
