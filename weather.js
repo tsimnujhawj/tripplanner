@@ -46,30 +46,30 @@ function getCurrentWeather(latlong) {
         });
 
     });
-
+    console.log(currentWeatherData);
     return currentWeatherData;
 
 }
 
-$(document).ready(function () {
-    var latlong = '44.86,-93.03';
-    var result =  getCurrentWeather(latlong);
-    console.log(result);
-
-    latlong = 'Eagan, MN';
-    result = getCurrentWeather(latlong);
-    console.log(result);
-
-    latlong = '55123';
-    result = getCurrentWeather(latlong);
-    console.log(result);
-
-    latlong = "";
-    result = getCurrentWeather(latlong);
-    console.log(result);
-
-    latlong = "552";
-    result = getCurrentWeather(latlong);
-    console.log(result);
-
-});
+// $(document).ready(function () {
+//     var latlong = '44.86,-93.03';
+//     var result =  getCurrentWeather(latlong);
+//     console.log(result);
+//
+//     latlong = 'Eagan, MN';
+//     result = getCurrentWeather(latlong);
+//     console.log(result);
+//
+//     latlong = '55123';
+//     result = getCurrentWeather(latlong);
+//     console.log(result);
+//
+//     latlong = "";
+//     result = getCurrentWeather(latlong);
+//     console.log(result);
+//
+//     latlong = "552";
+//     result = getCurrentWeather(latlong);
+//     console.log(result);
+//
+// });

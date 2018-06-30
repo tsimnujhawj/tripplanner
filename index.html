@@ -161,7 +161,9 @@
             </div>
         </div>
     </div>
-
+    <div style="display: none; text-align: center;" class='col-md-12 col-sm-12'>
+      <p>The weather at your location is <span id="weather"></span>.  The temperature is <span id="temperature"></span>, but it feels like <span id="feels-like"></span></p>
+    </div>
     <!-- Address input box -->
 <div class="row input-box">
     <div class="col-md-12 col-s-12">
@@ -178,8 +180,6 @@
     </div>
 </div>
 
-<button class="btn btn-primary" id="reset-btn" type="reset">Reset</button>
-
 
 </div>
 
@@ -191,7 +191,10 @@
 <script src="assets/javascript/logic.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZ-lWaRXK1_nq2EXYxkNiXe2CrkLNee-o"
 async defer></script>
-
+<!--
+<script type="text/javascript"  src="https://cdn.aerisjs.com/aeris.js" ></script>
+<script type="text/javascript" src="weather.js"></script>
+-->
 </body>
 </html>
 
